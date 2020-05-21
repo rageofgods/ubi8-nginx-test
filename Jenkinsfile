@@ -19,6 +19,7 @@ pipeline {
                 echo "=====docker login and build====="
                 withCredentials([usernamePassword(credentialsId: '345c1db8-4753-4d13-8a98-24bbf9ad130f', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
+                    docker login $DOCKER_REGISTRY -u $USERNAME -p $PASSWORD
                     docker build -t $DOCKER_REGISTRY:$GIT_COMMIT_SHORT -f $DOCKERFILE_NAME .
                     """
                 }
