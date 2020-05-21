@@ -2,7 +2,7 @@
 
 pipeline {
     agent {
-        lavel 'dev'
+        label 'dev'
     }
     environment {
         DOCKERFILE_NAME = 'Dockerfile'
