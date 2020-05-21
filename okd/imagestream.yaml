@@ -1,0 +1,17 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: ext_test
+  namespace: tech-nexign-sbx
+spec:d
+  lookupPolicy:
+    local: false
+  tags:
+    - annotations: null
+      from:
+        kind: DockerImage
+        name: 'registry.dso.techpark.local/dso.ext_test:latest'
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: Source

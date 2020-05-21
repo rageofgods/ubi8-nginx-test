@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: ext_test
+  annotations:
+    description: "Test NGINX"
+    iconClass: "icon-nginx"
+    tags: "nginx"
+objects:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    name: nginx
+  spec:
+    containers:
+    - env:
+      image: dso.ext_test
+      name: master
+      ports:
+      - containerPort: 80
+        protocol: TCP
