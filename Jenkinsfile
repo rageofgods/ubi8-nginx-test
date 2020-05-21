@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         DOCKERFILE_NAME = 'Dockerfile'
-        DOCKER_REGISTRY = 'registry.dso.techpark.local/DSO.EXT_TEST'
+        DOCKER_REGISTRY = 'registry.dso.techpark.local/dso.ext_test'
         GIT_COMMIT_SHORT = sh(
             script: "printf \$(git rev-parse --short ${GIT_COMMIT})",
             returnStdout: true
