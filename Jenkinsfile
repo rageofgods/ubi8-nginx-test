@@ -1,7 +1,9 @@
 #!groovy
 
 pipeline {
-    agent any
+    agent {
+        lavel 'dev'
+    }
     environment {
         DOCKERFILE_NAME = 'Dockerfile'
         DOCKER_REGISTRY = 'registry.dso.techpark.local/khokhlov_test'
