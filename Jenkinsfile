@@ -25,6 +25,7 @@ pipeline {
                     """
                 }
             }
+        }
         stage("Docker build image") {
             steps {
                 echo "=====docker login and build====="
