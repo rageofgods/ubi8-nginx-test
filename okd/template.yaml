@@ -13,7 +13,7 @@ objects:
     name: ext-test
   spec:
     containers:
-      image: dso.ext-test:latest
+      image: ext-test:latest
       name: nginx
       ports:
       - containerPort: 80

@@ -7,7 +7,7 @@ pipeline {
     environment {
         DOCKERFILE_NAME = 'Dockerfile'
         DOCKER_REGISTRY = 'registry.dso.techpark.local'
-        BUILD_NAME = 'dso.ext-test'
+        BUILD_NAME = 'ext-test'
         RH_REGISTRY = 'rh-registry.dso.techpark.local'
         OCP_URL = 'https://console.okd.techpark.local'
         IMAGESTREAM = 'okd/imagestream.yaml'
