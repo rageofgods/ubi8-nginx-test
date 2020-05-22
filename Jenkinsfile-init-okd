@@ -14,7 +14,7 @@ pipeline {
         stage("ocp login") {
             steps {
                 echo "=====ocp login====="
-                withCredentials([usernamePassword(credentialsId: '17a0e23e-81a3-481c-b8b5-19a25060e1ef', variable: 'TOKEN')]) {
+                withCredentials([string(credentialsId: '17a0e23e-81a3-481c-b8b5-19a25060e1ef', variable: 'TOKEN')]) {
                     sh """
                     oc login ${OCP_URL} --token $TOKEN
                     """
