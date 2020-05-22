@@ -2,7 +2,7 @@
 
 pipeline {
     agent {
-        label ${params.DEPLOY_ENV}
+        label "${params.DEPLOY_ENV}"
     }
     environment {
         DOCKERFILE_NAME = 'Dockerfile'
