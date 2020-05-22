@@ -65,11 +65,19 @@ pipeline {
                     """
             }
         }
-        stage("ocp build") {
+        stage("ocp deploy") {
             steps {
                 echo "=====ocp tag new image as latest====="
                     sh """
                     oc tag $DOCKER_REGISTRY/$BUILD_NAME:$GIT_COMMIT_SHORT $BUILD_NAME:latest
+                    """
+            }
+        }
+        stage("ocp get status") {
+            steps {
+                echo "=====ocp get podes====="
+                    sh """
+                    oc get podes
                     """
             }
         }
