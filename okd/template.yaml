@@ -52,8 +52,6 @@ spec:
             successThreshold: 1
             timeoutSeconds: 1
           resources: {}
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
