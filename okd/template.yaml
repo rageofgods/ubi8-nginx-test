@@ -88,20 +88,6 @@ objects:
       selector:
         app: ${APP_NAME}
         stand: ${STAND}
-  - apiVersion: v1
-    kind: Route
-    metadata:
-      name: ${APP_NAME}
-      annotations:
-        haproxy.router.openshift.io/timeout: 4m
-    spec:
-      tls:
-        insecureEdgeTerminationPolicy: Redirect
-        termination: edge
-      host: ${APP_NAME}.${ROUTE_HOST_NAME}
-      to:
-        kind: Service
-        name: ${APP_NAME}
 parameters:
   - description: App image
     displayName: App image
