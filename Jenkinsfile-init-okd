@@ -6,8 +6,8 @@ pipeline {
     }
     environment {
         OCP_URL = 'https://console.okd.techpark.local'
-        IMAGESTREAM = 'imagestream.yaml'
-        TEAMPLATE = 'template.yaml'
+        IMAGESTREAM = 'okd/imagestream.yaml'
+        TEAMPLATE = 'okd/template.yaml'
     }
     
     stages {
