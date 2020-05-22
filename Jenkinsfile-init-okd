@@ -16,7 +16,7 @@ pipeline {
                 echo "=====ocp login====="
                 withCredentials([string(credentialsId: '17a0e23e-81a3-481c-b8b5-19a25060e1ef', variable: 'TOKEN')]) {
                     sh """
-                    oc login $OCP_URL --token $TOKEN
+                    oc login $OCP_URL --token=$TOKEN
                     """
                 }
             }
