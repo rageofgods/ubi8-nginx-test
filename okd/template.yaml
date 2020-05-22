@@ -1,21 +1,125 @@
-apiVersion: v1
+apiVersion: template.openshift.io/v1
 kind: Template
 metadata:
-  name: ext_test
   annotations:
-    description: "Test NGINX"
     iconClass: "icon-nginx"
+    description: "NGINX test build"
     tags: "nginx"
+  name: ext_test
 objects:
-- apiVersion: v1
-  kind: Pod
-  metadata:
-    name: nginx
-  spec:
-    containers:
-    - env:
-      image: dso.ext_test
-      name: master
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      labels:
+        app: '${APP_NAME}'
+        stand: ${STAND}
+      name: '${APP_NAME}'
+    spec:
+      replicas: 1
+      strategy:
+        type: Rolling
+      template:
+        metadata:
+          labels:
+            app: '${APP_NAME}'
+            stand: ${STAND}
+        name: nginx-pod
+        spec:
+          containers:
+            - env:
+              image: '${APP_IMAGE}'
+              name: nginx
+              ports:
+              - containerPort: 80
+                name: web
+                protocol: TCP
+              livenessProbe:
+                httpGet:
+                  scheme: HTTP
+                  path: /index.html
+                  port: 80
+                initialDelaySeconds: 40
+                periodSeconds: 180
+                timeoutSeconds: 10
+              readinessProbe:
+                httpGet:
+                  path: /index.html
+                  port: 80
+               periodSeconds: 30
+              resources:
+                limits:
+                  cpu: '1'
+                  memory: 1Gi
+                requests:
+                  cpu: 100m
+                  memory: 256Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                  - ALL
+                privileged: false
+                readOnlyRootFilesystem: true
+                runAsNonRoot: true
+          restartPolicy: Always
+          dnsPolicy: ClusterFirst
+      triggers:
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - nginx
+            from:
+              kind: ImageStreamTag
+              name: 'dso.ext_test:latest'
+          type: ImageChange
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: ${APP_NAME}
+      labels:
+        app: ${APP_NAME}
+        stand: ${STAND}
+    spec:
+      type: ClusterIP
       ports:
-      - containerPort: 80
+      - port: 80
         protocol: TCP
+        targetPort: 80
+      selector:
+        app: ${APP_NAME}
+        stand: ${STAND}
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      name: ${APP_NAME}
+      annotations:
+        haproxy.router.openshift.io/timeout: 4m
+    spec:
+      tls:
+        insecureEdgeTerminationPolicy: Redirect
+        termination: edge
+      host: ${APP_NAME}.${ROUTE_HOST_NAME}
+      to:
+        kind: Service
+        name: ${APP_NAME}
+parameters:
+  - description: App image
+    displayName: App image
+    name: APP_IMAGE
+    value: '172.30.1.1:5000/dso.ext_test:latest'
+  - description: App name
+    displayName: App name
+    name: APP_NAME
+    value: nginx-test
+  - description: The OpenShift Namespace where the App ImageStream resides.
+    displayName: ImageStream Namespace
+    name: NAMESPACE
+    value: tech-nexign-sbx
+  - description: Stand name
+    displayName: Stand name
+    name: STAND
+    value: dev
+  - description: Route host name
+    displayName: Route host name
+    name: ROUTE_HOST_NAME
+    value: nginx-test.koa.techpark.local

@@ -29,21 +29,17 @@ pipeline {
         stage("Docker build image") {
             steps {
                 echo "=====docker login and build====="
-                withCredentials([usernamePassword(credentialsId: '345c1db8-4753-4d13-8a98-24bbf9ad130f', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh """
-                    docker build -t $DOCKER_REGISTRY:$GIT_COMMIT_SHORT -f $DOCKERFILE_NAME .
-                    """
-                }
+                sh """
+                docker build -t $DOCKER_REGISTRY:$GIT_COMMIT_SHORT -f $DOCKERFILE_NAME .
+                """
             }
         }
         stage("Docker push image") {
             steps {
                 echo "=====docker login and push====="
-                withCredentials([usernamePassword(credentialsId: '345c1db8-4753-4d13-8a98-24bbf9ad130f', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh """
-                    docker push $DOCKER_REGISTRY:$GIT_COMMIT_SHORT
-                    """
-                }
+                sh """
+                docker push $DOCKER_REGISTRY:$GIT_COMMIT_SHORT
+                """
             }
         }
     }
