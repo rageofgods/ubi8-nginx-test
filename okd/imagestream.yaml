@@ -10,7 +10,7 @@ spec:
     - annotations: null
       from:
         kind: DockerImage
-        name: 'registry.dso.techpark.local/dso.ext-test:latest'
+        name: 'registry.dso.techpark.local/ext-test:latest'
       importPolicy: {}
       name: latest
       referencePolicy:
