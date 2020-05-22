@@ -27,8 +27,7 @@ spec:
         deploymentconfig: ext-test
     spec:
       containers:
-        - image: >-
-            registry.dso.techpark.local/ext-test:latest
+        - env:
           imagePullPolicy: Always
           livenessProbe:
             failureThreshold: 3
@@ -42,8 +41,6 @@ spec:
           name: ext-test
           ports:
             - containerPort: 8080
-              protocol: TCP
-            - containerPort: 8443
               protocol: TCP
           readinessProbe:
             failureThreshold: 3
