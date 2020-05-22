@@ -1,0 +1,34 @@
+#!groovy
+
+pipeline {
+    agent {
+        label 'dev'
+    }
+    environment {
+        OCP_URL = 'console.apps.okd.techpark.local'
+        IMAGESTREAM = 'imagestream.yaml'
+        TEAMPLATE = 'template.yaml'
+    }
+    
+    stages {
+        stage("ocp login") {
+            steps {
+                echo "=====ocp login====="
+                withCredentials([usernamePassword(credentialsId: '17a0e23e-81a3-481c-b8b5-19a25060e1ef', variable: 'TOKEN')]) {
+                    sh """
+                    oc login ${OCP_URL} --token $TOKEN
+                    """
+                }
+            }
+        }
+        stage("ocp init image stream and teamplate") {
+            steps {
+                echo "=====ocp login====="
+                    sh """
+                    oc apply -f ${IMAGESTREAM}
+                    oc apply -f ${TEAMPLATE}
+                    """
+            }
+        }
+    }
+}
