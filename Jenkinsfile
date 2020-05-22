@@ -65,9 +65,9 @@ pipeline {
                     """
             }
         }
-        stage("ocp init image stream and teamplate") {
+        stage("ocp build") {
             steps {
-                echo "=====ocp login====="
+                echo "=====ocp tag new image as latest====="
                     sh """
                     oc tag $DOCKER_REGISTRY/$BUILD_NAME:$GIT_COMMIT_SHORT $BUILD_NAME:latest
                     """
