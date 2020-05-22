@@ -5,7 +5,7 @@ metadata:
     iconClass: "icon-nginx"
     description: "NGINX test build"
     tags: "nginx"
-  name: ext_test
+  name: ext-test
 objects:
   - apiVersion: v1
     kind: DeploymentConfig
