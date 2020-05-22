@@ -27,6 +27,7 @@ spec:
         deploymentconfig: ext-test
     spec:
       containers:
+        - env:
           imagePullPolicy: Always
           livenessProbe:
             failureThreshold: 3
