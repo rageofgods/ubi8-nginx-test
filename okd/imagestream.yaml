@@ -3,7 +3,7 @@ kind: ImageStream
 metadata:
   name: ext_test
   namespace: tech-nexign-sbx
-spec:d
+spec:
   lookupPolicy:
     local: false
   tags:
