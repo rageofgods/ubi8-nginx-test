@@ -72,22 +72,6 @@ objects:
               kind: ImageStreamTag
               name: 'dso.ext_test:latest'
           type: ImageChange
-  - apiVersion: v1
-    kind: Service
-    metadata:
-      name: ${APP_NAME}
-      labels:
-        app: ${APP_NAME}
-        stand: ${STAND}
-    spec:
-      type: ClusterIP
-      ports:
-      - port: 80
-        protocol: TCP
-        targetPort: 80
-      selector:
-        app: ${APP_NAME}
-        stand: ${STAND}
 parameters:
   - description: App image
     displayName: App image
