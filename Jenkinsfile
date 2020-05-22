@@ -6,8 +6,12 @@ pipeline {
     }
     environment {
         DOCKERFILE_NAME = 'Dockerfile'
-        DOCKER_REGISTRY = 'registry.dso.techpark.local/dso.ext_test'
+        DOCKER_REGISTRY = 'registry.dso.techpark.local'
+        BUILD_NAME = 'dso.ext_test'
         RH_REGISTRY = 'rh-registry.dso.techpark.local'
+        OCP_URL = 'https://console.okd.techpark.local'
+        IMAGESTREAM = 'okd/imagestream.yaml'
+        TEAMPLATE = 'okd/template.yaml'
         GIT_COMMIT_SHORT = sh(
             script: "printf \$(git rev-parse --short ${GIT_COMMIT})",
             returnStdout: true
@@ -30,7 +34,7 @@ pipeline {
             steps {
                 echo "=====docker login and build====="
                 sh """
-                docker build -t $DOCKER_REGISTRY:$GIT_COMMIT_SHORT -f $DOCKERFILE_NAME .
+                docker build -t $DOCKER_REGISTRY/$BUILD_NAME:$GIT_COMMIT_SHORT -f $DOCKERFILE_NAME .
                 """
             }
         }
@@ -38,8 +42,35 @@ pipeline {
             steps {
                 echo "=====docker login and push====="
                 sh """
-                docker push $DOCKER_REGISTRY:$GIT_COMMIT_SHORT
+                docker push $DOCKER_REGISTRY/$BUILD_NAME:$GIT_COMMIT_SHORT
                 """
+            }
+        }
+        stage("ocp login") {
+            steps {
+                echo "=====ocp login====="
+                withCredentials([string(credentialsId: '17a0e23e-81a3-481c-b8b5-19a25060e1ef', variable: 'TOKEN')]) {
+                    sh """
+                    oc login $OCP_URL --token $TOKEN
+                    """
+                }
+            }
+        }
+        stage("ocp init image stream and teamplate") {
+            steps {
+                echo "=====ocp login====="
+                    sh """
+                    oc apply -f $IMAGESTREAM
+                    oc apply -f $TEAMPLATE
+                    """
+            }
+        }
+        stage("ocp init image stream and teamplate") {
+            steps {
+                echo "=====ocp login====="
+                    sh """
+                    oc tag $DOCKER_REGISTRY/$BUILD_NAME:$GIT_COMMIT_SHORT $BUILD_NAME:latest
+                    """
             }
         }
     }
