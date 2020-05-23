@@ -78,6 +78,8 @@ pipeline {
         }
         stage("ocp get status") {
             steps {
+                echo "=====Waiting 15 second to build process catch-up====="
+                sleep(time:15,unit:"SECONDS")
                 echo "=====ocp get podes====="
                     sh """
                     oc get pods | grep Running | grep '1/1'
