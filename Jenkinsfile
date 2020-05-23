@@ -25,7 +25,7 @@ pipeline {
         stage("Docker registry login") {
             steps {
                 echo "=====docker login registry====="
-                withCredentials([usernamePassword(credentialsId: "$DOCKER_REGISTRY_AUTH_ID", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: '$DOCKER_REGISTRY_AUTH_ID', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
                     docker login $RH_REGISTRY -u $USERNAME -p $PASSWORD
                     docker login $DOCKER_REGISTRY -u $USERNAME -p $PASSWORD
@@ -52,7 +52,7 @@ pipeline {
         stage("ocp login") {
             steps {
                 echo "=====ocp login====="
-                withCredentials([string(credentialsId: "$OCP_AUTH_ID", variable: 'TOKEN')]) {
+                withCredentials([string(credentialsId: '$OCP_AUTH_ID', variable: 'TOKEN')]) {
                     sh """
                     oc login $OCP_URL --token $TOKEN
                     """
