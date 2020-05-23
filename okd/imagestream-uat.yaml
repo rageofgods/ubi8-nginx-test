@@ -1,0 +1,17 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: ext-test
+  namespace: tech-nexign-sbx
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - annotations: null
+      from:
+        kind: DockerImage
+        name: 'registry.gazprom-neft.local:5000/ext-test:latest'
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: Source
