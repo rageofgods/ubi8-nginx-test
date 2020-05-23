@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         DOCKERFILE_NAME = "${params.DOCKERFILE_NAME}"
-        TEAMPLATE_NAME = "${parmas.TEAMPLATE_NAME}"
+        TEMPLATE_NAME = "${parmas.TEMPLATE_NAME}"
         DOCKER_REGISTRY = "${params.DOCKER_REGISTRY}"
         DOCKER_REGISTRY_AUTH_ID = "${params.DOCKER_REGISTRY_AUTH_ID}"
         BUILD_NAME = "${params.BUILD_NAME}"
@@ -25,7 +25,7 @@ pipeline {
         stage("Docker registry login") {
             steps {
                 echo "=====docker login registry====="
-                withCredentials([usernamePassword(credentialsId: '$DOCKER_REGISTRY_AUTH_ID', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: $DOCKER_REGISTRY_AUTH_ID, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
                     docker login $RH_REGISTRY -u $USERNAME -p $PASSWORD
                     docker login $DOCKER_REGISTRY -u $USERNAME -p $PASSWORD
@@ -52,7 +52,7 @@ pipeline {
         stage("ocp login") {
             steps {
                 echo "=====ocp login====="
-                withCredentials([string(credentialsId: '$OCP_AUTH_ID', variable: 'TOKEN')]) {
+                withCredentials([string(credentialsId: $OCP_AUTH_ID, variable: 'TOKEN')]) {
                     sh """
                     oc login $OCP_URL --token $TOKEN
                     """
@@ -64,7 +64,7 @@ pipeline {
                 echo "=====ocp login====="
                     sh """
                     oc apply -f $IMAGESTREAM
-                    oc apply -f $TEAMPLATE_NAME
+                    oc apply -f $TEMPLATE_NAME
                     """
             }
         }
