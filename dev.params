@@ -1,5 +1,5 @@
 DEPLOY_ENV = 'dev'
-DOCKERFILE_NAME = 'Dockerfile'
+DOCKERFILE_NAME = 'Dockerfile-dev'
 DOCKER_REGISTRY = 'registry.dso.techpark.local'
 BUILD_NAME = 'ext-test'
 RH_REGISTRY = 'rh-registry.dso.techpark.local'

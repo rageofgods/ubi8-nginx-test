@@ -1,5 +1,5 @@
 DEPLOY_ENV = 'docker'
-DOCKERFILE_NAME = 'Dockerfile'
+DOCKERFILE_NAME = 'Dockerfile-uat'
 DOCKER_REGISTRY = 'registry.gazprom-neft.local:5000'
 BUILD_NAME = 'ext-test'
 RH_REGISTRY = 'rh-registry.gazprom-neft.local:5000'
