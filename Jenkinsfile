@@ -80,7 +80,7 @@ pipeline {
             steps {
                 echo "=====ocp get podes====="
                     sh """
-                    oc get pods | grep Running 
+                    oc get pods | grep Running | grep '1/1'
                     """
             }
         }
