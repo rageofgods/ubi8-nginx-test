@@ -80,7 +80,7 @@ pipeline {
             steps {
                 echo "=====ocp create application====="
                     sh """
-                    oc new-app $BUILD_NAME -p APPLICATION_NAME=$BUILD_NAME
+                    oc new-app --template=$BUILD_NAME -p APPLICATION_NAME=$BUILD_NAME
                     """
             }
         }
