@@ -1,71 +1,111 @@
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: template.openshift.io/v1    
+kind: Template
+labels:
+  app: ext-test
+  template: ext-test-template
 metadata:
-  labels:
-    app: ext-test
+  annotations:
+    description: ext-test Frontend service
+    openshift.io/display-name: ext-test
+    openshift.io/provider-display-name: ext-test
+    tags: ext-test
   name: ext-test
-  namespace: tech-nexign-sbx
-spec:
-  replicas: 1
-  selector:
-    app: ext-test
-    deploymentconfig: ext-test
-  strategy:
-    activeDeadlineSeconds: 21600
-    resources: {}
-    rollingParams:
-      intervalSeconds: 1
-      maxSurge: 25%
-      maxUnavailable: 25%
-      timeoutSeconds: 600
-      updatePeriodSeconds: 1
-    type: Rolling
-  template:
+objects:
+  - apiVersion: v1    
+    kind: DeploymentConfig
     metadata:
       labels:
         app: ext-test
-        deploymentconfig: ext-test
+      name: ext-test
+      namespace: tech-nexign-sbx
     spec:
-      containers:
-        - env:
-          imagePullPolicy: Always
-          livenessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /
-              port: 8080
-              scheme: HTTP
-            periodSeconds: 10
-            successThreshold: 1
-            timeoutSeconds: 1
-          name: ext-test
-          ports:
-            - containerPort: 8080
-              protocol: TCP
-          readinessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /index.html
-              port: 8080
-              scheme: HTTP
-            periodSeconds: 10
-            successThreshold: 1
-            timeoutSeconds: 1
-          resources: {}
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
-  test: false
-  triggers:
-    - type: ConfigChange
-    - imageChangeParams:
-        automatic: true
-        containerNames:
-          - ext-test
-        from:
-          kind: ImageStreamTag
-          name: 'ext-test:latest'
-          namespace: tech-nexign-sbx
-      type: ImageChange
+      replicas: 1
+      selector:
+        app: ext-test
+        deploymentconfig: ext-test
+      strategy:
+        activeDeadlineSeconds: 21600
+        resources: {}
+        rollingParams:
+          intervalSeconds: 1
+          maxSurge: 25%
+          maxUnavailable: 25%
+          timeoutSeconds: 600
+          updatePeriodSeconds: 1
+        type: Rolling
+      template:
+        metadata:
+          labels:
+            app: ext-test
+            deploymentconfig: ext-test
+        spec:
+          containers:
+            - env:
+              imagePullPolicy: Always
+              livenessProbe:
+                failureThreshold: 3
+                httpGet:
+                  path: /
+                  port: 8080
+                  scheme: HTTP
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 1
+              name: ext-test
+              ports:
+                - containerPort: 8080
+                  protocol: TCP
+              readinessProbe:
+                failureThreshold: 3
+                httpGet:
+                  path: /index.html
+                  port: 8080
+                  scheme: HTTP
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 1
+              resources: {}
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+      test: false
+      triggers:
+        - type: ConfigChange
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - ext-test
+            from:
+              kind: ImageStreamTag
+              name: 'ext-test:latest'
+              namespace: tech-nexign-sbx
+          type: ImageChange
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: ext-test
+      labels:
+        app: ext-test
+    spec:
+      type: ClusterIP
+      ports:
+      - port: 8080
+        protocol: TCP
+        targetPort: 8080
+      selector:
+        app: ext-test
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      name: ext-test
+      annotations:
+        haproxy.router.openshift.io/timeout: 4m
+    spec:
+      tls:
+        insecureEdgeTerminationPolicy: Redirect
+        termination: edge
+      to:
+        kind: Service
+        name: ext-test
