@@ -81,10 +81,10 @@ pipeline {
                 expression {
                     def status = sh(script: "oc get all --selector app=$BUILD_NAME", returnStatus: true) 
                     if (status != 0) {
-                        return false
+                        return false;
                     }
                     else {
-                        return true
+                        return true;
                     }
                 }
             }
