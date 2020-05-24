@@ -81,7 +81,7 @@ pipeline {
                 not {
                     expression {
                         sh """ 
-                        oc get all --selector app=$BUILD_NAME)
+                        oc get all --selector app=$BUILD_NAME
                         """
                     }
                 }
