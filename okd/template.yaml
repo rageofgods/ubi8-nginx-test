@@ -69,8 +69,9 @@ objects:
           securityContext: {}
           terminationGracePeriodSeconds: 30
       triggers:
-        - imageChangeParams:
-          type: ImageChange
+        - type: "ConfigChange"
+        - type: "ImageChange"
+          ImageChangeParams:
             automatic: true
             containerNames:
               - ext-test
