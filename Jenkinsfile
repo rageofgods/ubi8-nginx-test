@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         withFolderProperties{
-            TEST = "${env.test}"
+            TEST = "${env.TEST}"
         }
         DOCKERFILE_NAME = "${params.DOCKERFILE_NAME}"
         TEMPLATE_NAME = "${params.TEMPLATE_NAME}"
