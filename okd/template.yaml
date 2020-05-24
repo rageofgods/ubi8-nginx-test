@@ -69,14 +69,14 @@ objects:
           securityContext: {}
           terminationGracePeriodSeconds: 30
       triggers:
-        - type: "ImageChange"
-          ImageChangeParams:
-            automatic: true
-            containerNames:
-              - ext-test
-            from:
-              kind: ImageStreamTag
-              name: 'ext-test:latest'
+        - imageChangeParams:
+          automatic: true
+          containerNames:
+            - ext-test
+          from:
+            kind: ImageStreamTag
+            name: 'ext-test:latest'
+        type: ImageChange
   - apiVersion: v1
     kind: Service
     metadata:
