@@ -68,6 +68,14 @@ pipeline {
                     """
             }
         }
+        stage("ocp create new app from template") {
+            steps {
+                echo "=====ocp create template====="
+                    sh """
+                    oc new-app $BUILD_NAME -p APPLICATION_NAME=$BUILD_NAME
+                    """
+            }
+        }
         stage("ocp deploy") {
             steps {
                 echo "=====ocp tag new image as latest====="
