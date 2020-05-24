@@ -5,9 +5,6 @@ pipeline {
         label "${params.DEPLOY_ENV}"
     }
     environment {
-        withFolderProperties{
-            TEST = "${env.TEST}"
-        }
         DOCKERFILE_NAME = "${params.DOCKERFILE_NAME}"
         TEMPLATE_NAME = "${params.TEMPLATE_NAME}"
         DOCKER_REGISTRY = "${params.DOCKER_REGISTRY}"
