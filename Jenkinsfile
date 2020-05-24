@@ -30,7 +30,7 @@ pipeline {
                 echo "=====docker login registry====="
                 script {
                     withFolderProperties {
-                        echo("${env.TEST}")
+                        echo("${env.QWERTY}")
                     }
                 }
                 withCredentials([usernamePassword(credentialsId: "$DOCKER_REGISTRY_AUTH_ID", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
