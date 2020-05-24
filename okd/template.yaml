@@ -69,14 +69,16 @@ objects:
           securityContext: {}
           terminationGracePeriodSeconds: 30
       triggers:
+        - type: ConfigChange
         - imageChangeParams:
-          automatic: true
-          containerNames:
-            - ext-test
-          from:
-            kind: ImageStreamTag
-            name: 'ext-test:latest'
-        type: ImageChange
+            automatic: true
+            containerNames:
+              - ext-test
+            from:
+              kind: ImageStreamTag
+              name: 'ext-test:latest'
+              namespace: tech-nexign-sbx
+          type: ImageChange
   - apiVersion: v1
     kind: Service
     metadata:
