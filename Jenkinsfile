@@ -79,9 +79,9 @@ pipeline {
         stage("ocp create new app from the template") {
             when {
                 not {
-                    sh """
-                    oc get all --selector app=$BUILD_NAME
-                    """
+                    expression {
+                        sh(oc get all --selector app=$BUILD_NAME)
+                    }
                 }
             }
             steps {
