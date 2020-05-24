@@ -80,7 +80,7 @@ pipeline {
             when {
                 not {
                     expression {
-                        def status = sh(script: "oc get all --selector app=$BUILD_NAME", returnStatus: true) 
+                        def status = sh(script: "oc get all --selector app=$BUILD_NAME | grep Running", returnStatus: true) 
                         if (status != 0) {
                             return false;
                         }
