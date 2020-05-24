@@ -69,7 +69,6 @@ objects:
           securityContext: {}
           terminationGracePeriodSeconds: 30
       triggers:
-        - type: "ConfigChange"
         - type: "ImageChange"
           ImageChangeParams:
             automatic: true
@@ -78,7 +77,6 @@ objects:
             from:
               kind: ImageStreamTag
               name: 'ext-test:latest'
-              namespace: tech-nexign-sbx
   - apiVersion: v1
     kind: Service
     metadata:
