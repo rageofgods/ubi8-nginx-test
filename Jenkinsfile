@@ -68,19 +68,19 @@ pipeline {
                     """
             }
         }
-        stage("ocp create new app from template") {
-            steps {
-                echo "=====ocp create template====="
-                    sh """
-                    oc new-app $BUILD_NAME -p APPLICATION_NAME=$BUILD_NAME
-                    """
-            }
-        }
         stage("ocp deploy") {
             steps {
                 echo "=====ocp tag new image as latest====="
                     sh """
                     oc tag $DOCKER_REGISTRY/$BUILD_NAME:$GIT_COMMIT_SHORT $BUILD_NAME:latest
+                    """
+            }
+        }
+        stage("ocp create new app from the template") {
+            steps {
+                echo "=====ocp create application====="
+                    sh """
+                    oc new-app $BUILD_NAME -p APPLICATION_NAME=$BUILD_NAME
                     """
             }
         }
