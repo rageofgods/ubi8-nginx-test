@@ -80,7 +80,9 @@ pipeline {
             when {
                 not {
                     expression {
-                        sh(oc get all --selector app=$BUILD_NAME)
+                        sh """ 
+                        oc get all --selector app=$BUILD_NAME)
+                        """
                     }
                 }
             }
