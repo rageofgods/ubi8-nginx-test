@@ -20,9 +20,6 @@ objects:
       namespace: tech-nexign-sbx
     spec:
       replicas: 1
-      selector:
-        app: ext-test
-        deploymentconfig: ext-test
       strategy:
         activeDeadlineSeconds: 21600
         resources: {}
@@ -38,6 +35,7 @@ objects:
           labels:
             app: ext-test
             deploymentconfig: ext-test
+        name: ext-test-pod
         spec:
           containers:
             - env:
@@ -70,10 +68,9 @@ objects:
           schedulerName: default-scheduler
           securityContext: {}
           terminationGracePeriodSeconds: 30
-      test: false
       triggers:
-        - type: ConfigChange
         - imageChangeParams:
+          type: ImageChange
             automatic: true
             containerNames:
               - ext-test
@@ -81,7 +78,6 @@ objects:
               kind: ImageStreamTag
               name: 'ext-test:latest'
               namespace: tech-nexign-sbx
-          type: ImageChange
   - apiVersion: v1
     kind: Service
     metadata:
