@@ -5,9 +5,6 @@ pipeline {
         label "${params.DEPLOY_ENV}"
     }
     environment {
-        withFolderProperties {
-            QWERTY = "${env.QWERTY}"
-        }
         DOCKERFILE_NAME = "${params.DOCKERFILE_NAME}"
         TEMPLATE_NAME = "${params.TEMPLATE_NAME}"
         DOCKER_REGISTRY = "${params.DOCKER_REGISTRY}"
@@ -28,7 +25,6 @@ pipeline {
         stage("Docker registry login") {
             steps {
                 echo "=====docker login registry====="
-                echo "$QWERTY"
                 withCredentials([usernamePassword(credentialsId: "$DOCKER_REGISTRY_AUTH_ID", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
                     docker login $RH_REGISTRY -u $USERNAME -p $PASSWORD
