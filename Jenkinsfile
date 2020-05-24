@@ -28,7 +28,11 @@ pipeline {
         stage("Docker registry login") {
             steps {
                 echo "=====docker login registry====="
-                echo '$TEST'
+                script {
+                    withFolderProperties {
+                        echo "${env.TEST}"
+                    }
+                }
                 withCredentials([usernamePassword(credentialsId: "$DOCKER_REGISTRY_AUTH_ID", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
                     docker login $RH_REGISTRY -u $USERNAME -p $PASSWORD
