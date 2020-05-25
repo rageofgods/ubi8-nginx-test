@@ -1,4 +1,4 @@
-@Library('libdsok') _
+@Library('libdso') _
 
 def DOCKERFILE_NAME = "${params.DOCKERFILE_NAME}"
 def TEMPLATE_NAME = "${params.TEMPLATE_NAME}"
