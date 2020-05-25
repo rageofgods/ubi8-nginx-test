@@ -11,6 +11,7 @@ def OCP_URL = "${params.OCP_URL}"
 def OCP_AUTH_ID = "${params.OCP_AUTH_ID}"
 def IMAGESTREAM = "${params.IMAGESTREAM}"
 def DEPLOY_ENV = "${params.DEPLOY_ENV}"
+def GIT_COMMIT = checkout(scm).GIT_COMMIT
 def GIT_COMMIT_SHORT = sh(
     script: "printf \$(git rev-parse --short ${GIT_COMMIT})",
     returnStdout: true
