@@ -1,16 +1,16 @@
-@Library('libdso') _
+@Library('libdso')_
 
-def DOCKERFILE_NAME = 'Dockerfile-dev'
-def TEMPLATE_NAME = 'okd/template.yaml'
-def DOCKER_REGISTRY = 'registry.dso.techpark.local'
-def OCKER_REGISTRY_AUTH_ID = '345c1db8-4753-4d13-8a98-24bbf9ad130f'
-def BUILD_NAME = 'ext-test'
-def RH_REGISTRY = 'rh-registry.dso.techpark.local'
-def RH_REGISTRY_AUTH_ID = '345c1db8-4753-4d13-8a98-24bbf9ad130f'
-def OCP_URL = 'https://console.okd.techpark.local'
-def OCP_AUTH_ID = 'e747143a-ad7c-4649-9c0a-4944092a5535'
-def IMAGESTREAM = 'okd/imagestream-dev.yaml'
-def DEPLOY_ENV = 'dev'
+def DOCKERFILE_NAME = "${params.DOCKERFILE_NAME}"
+def TEMPLATE_NAME = "${params.TEMPLATE_NAME}"
+def DOCKER_REGISTRY = "${params.DOCKER_REGISTRY}"
+def OCKER_REGISTRY_AUTH_ID = "${params.DOCKER_REGISTRY_AUTH_ID}"
+def BUILD_NAME = "${params.BUILD_NAME}"
+def RH_REGISTRY = "${params.RH_REGISTRY}"
+def RH_REGISTRY_AUTH_ID = "${params.RH_REGISTRY_AUTH_ID}"
+def OCP_URL = "${params.OCP_URL}"
+def OCP_AUTH_ID = "${params.OCP_AUTH_ID}"
+def IMAGESTREAM = "${params.IMAGESTREAM}"
+def DEPLOY_ENV = "${params.DEPLOY_ENV}"
 def GIT_COMMIT = checkout(scm).GIT_COMMIT
 
 extTestPipeline(deploy_env: "$DEPLOY_ENV", dockerfile_name: "$DOCKERFILE_NAME",
