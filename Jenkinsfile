@@ -107,9 +107,12 @@ pipeline {
                     """
             }
         }
-        stage("tests") {
+        stage("Run next stage") {
             steps {
-                echo "=====ocp get podes====="
+                echo "Start running UAT"
+                when {
+                    expression { params.DEPLOY_ENV == 'dev' }
+                }
                     build job: 'DSO.EXT_TEST_UAT'
             }
         }
