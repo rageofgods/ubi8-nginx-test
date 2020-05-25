@@ -108,11 +108,9 @@ pipeline {
             }
         }
         stage("Run next stage") {
+            when { expression { params.DEPLOY_ENV == 'dev' } }
             steps {
                 echo "Start running UAT"
-                when {
-                    expression { params.DEPLOY_ENV == 'dev' }
-                }
                     build job: 'DSO.EXT_TEST_UAT'
             }
         }
