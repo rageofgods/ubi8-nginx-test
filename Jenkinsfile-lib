@@ -1,17 +1,17 @@
 @Library('libdso') _
 
-DOCKERFILE_NAME = "${params.DOCKERFILE_NAME}"
-TEMPLATE_NAME = "${params.TEMPLATE_NAME}"
-DOCKER_REGISTRY = "${params.DOCKER_REGISTRY}"
-OCKER_REGISTRY_AUTH_ID = "${params.DOCKER_REGISTRY_AUTH_ID}"
-BUILD_NAME = "${params.BUILD_NAME}"
-RH_REGISTRY = "${params.RH_REGISTRY}"
-RH_REGISTRY_AUTH_ID = "${params.RH_REGISTRY_AUTH_ID}"
-OCP_URL = "${params.OCP_URL}"
-OCP_AUTH_ID = "${params.OCP_AUTH_ID}"
-IMAGESTREAM = "${params.IMAGESTREAM}"
-DEPLOY_ENV = "${params.DEPLOY_ENV}"
-GIT_COMMIT_SHORT = sh(
+def DOCKERFILE_NAME = "${params.DOCKERFILE_NAME}"
+def TEMPLATE_NAME = "${params.TEMPLATE_NAME}"
+def DOCKER_REGISTRY = "${params.DOCKER_REGISTRY}"
+def OCKER_REGISTRY_AUTH_ID = "${params.DOCKER_REGISTRY_AUTH_ID}"
+def BUILD_NAME = "${params.BUILD_NAME}"
+def RH_REGISTRY = "${params.RH_REGISTRY}"
+def RH_REGISTRY_AUTH_ID = "${params.RH_REGISTRY_AUTH_ID}"
+def OCP_URL = "${params.OCP_URL}"
+def OCP_AUTH_ID = "${params.OCP_AUTH_ID}"
+def IMAGESTREAM = "${params.IMAGESTREAM}"
+def DEPLOY_ENV = "${params.DEPLOY_ENV}"
+def GIT_COMMIT_SHORT = sh(
     script: "printf \$(git rev-parse --short ${GIT_COMMIT})",
     returnStdout: true
 
