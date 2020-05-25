@@ -107,5 +107,11 @@ pipeline {
                     """
             }
         }
+        stage("tests") {
+            steps {
+                echo "=====ocp get podes====="
+                    build job: 'DSO.EXT_TEST_UAT'
+            }
+        }
     }
 }
