@@ -1,23 +1,24 @@
 @Library('libdso')_
 
-def DOCKERFILE_NAME = "${params.DOCKERFILE_NAME}"
-def TEMPLATE_NAME = "${params.TEMPLATE_NAME}"
-def DOCKER_REGISTRY = "${params.DOCKER_REGISTRY}"
-def OCKER_REGISTRY_AUTH_ID = "${params.DOCKER_REGISTRY_AUTH_ID}"
-def BUILD_NAME = "${params.BUILD_NAME}"
-def RH_REGISTRY = "${params.RH_REGISTRY}"
-def RH_REGISTRY_AUTH_ID = "${params.RH_REGISTRY_AUTH_ID}"
-def OCP_URL = "${params.OCP_URL}"
-def OCP_AUTH_ID = "${params.OCP_AUTH_ID}"
-def IMAGESTREAM = "${params.IMAGESTREAM}"
-def DEPLOY_ENV = "${params.DEPLOY_ENV}"
-def GIT_COMMIT = checkout(scm).GIT_COMMIT
+node {
+    def DOCKERFILE_NAME = "${params.DOCKERFILE_NAME}"
+    def TEMPLATE_NAME = "${params.TEMPLATE_NAME}"
+    def DOCKER_REGISTRY = "${params.DOCKER_REGISTRY}"
+    def OCKER_REGISTRY_AUTH_ID = "${params.DOCKER_REGISTRY_AUTH_ID}"
+    def BUILD_NAME = "${params.BUILD_NAME}"
+    def RH_REGISTRY = "${params.RH_REGISTRY}"
+    def RH_REGISTRY_AUTH_ID = "${params.RH_REGISTRY_AUTH_ID}"
+    def OCP_URL = "${params.OCP_URL}"
+    def OCP_AUTH_ID = "${params.OCP_AUTH_ID}"
+    def IMAGESTREAM = "${params.IMAGESTREAM}"
+    def DEPLOY_ENV = "${params.DEPLOY_ENV}"
+    def GIT_COMMIT = checkout(scm).GIT_COMMIT
 
-extTestPipeline(deploy_env: "$DEPLOY_ENV", dockerfile_name: "$DOCKERFILE_NAME",
-template_name: "$TEMPLATE_NAME", docker_registry: "$DOCKER_REGISTRY",
-                docker_registry_auth_id: "$DOCKER_REGISTRY_AUTH_ID",
-                build_name: "$BUILD_NAME", rh_registry: "$RH_REGISTRY",
-                rh_registry_auth_id: "$RH_REGISTRY_AUTH_ID", ocp_url: "$OCP_URL",
-                ocp_auth_id: "$OCP_AUTH_ID", imagestream: "$IMAGESTREAM")
-
+    extTestPipeline(deploy_env: "$DEPLOY_ENV", dockerfile_name: "$DOCKERFILE_NAME",
+    template_name: "$TEMPLATE_NAME", docker_registry: "$DOCKER_REGISTRY",
+                    docker_registry_auth_id: "$DOCKER_REGISTRY_AUTH_ID",
+                    build_name: "$BUILD_NAME", rh_registry: "$RH_REGISTRY",
+                    rh_registry_auth_id: "$RH_REGISTRY_AUTH_ID", ocp_url: "$OCP_URL",
+                    ocp_auth_id: "$OCP_AUTH_ID", imagestream: "$IMAGESTREAM")
+}
     
