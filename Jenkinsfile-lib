@@ -1,4 +1,4 @@
-@Library('libdso') _
+@Library('libdsok') _
 
 def DOCKERFILE_NAME = "${params.DOCKERFILE_NAME}"
 def TEMPLATE_NAME = "${params.TEMPLATE_NAME}"
@@ -13,7 +13,7 @@ def IMAGESTREAM = "${params.IMAGESTREAM}"
 def DEPLOY_ENV = "${params.DEPLOY_ENV}"
 def GIT_COMMIT = checkout(scm).GIT_COMMIT
 
-ext_test_pipelines(deploy_env: "$DEPLOY_ENV", dockerfile_name: "$DOCKERFILE_NAME",
+ext_test_pipeline(deploy_env: "$DEPLOY_ENV", dockerfile_name: "$DOCKERFILE_NAME",
 template_name: "$TEMPLATE_NAME", docker_registry: "$DOCKER_REGISTRY",
                 docker_registry_auth_id: "$DOCKER_REGISTRY_AUTH_ID",
                 build_name: "$BUILD_NAME", rh_registry: "$RH_REGISTRY",
