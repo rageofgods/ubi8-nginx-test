@@ -3,7 +3,7 @@
 def building_dev = ["dev", "uat"]
 def current_build_prefix = "${env.JOB_NAME}".substring("${env.JOB_NAME}".indexOf("(") + 1, "${env.JOB_NAME}".length() - 1)
 def current_build_index = building_dev.findIndexOf{it == current_build_prefix}
-def current_build_index_size = myList.size()
+def current_build_index_size = building_dev.size()
 
 pipeline {
     agent {
