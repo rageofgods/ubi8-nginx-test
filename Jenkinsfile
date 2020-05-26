@@ -5,6 +5,7 @@ pipeline {
         label "${params.DEPLOY_ENV}"
     }
     environment {
+        TEST_ENV = ["dev", "Banana", "Orange"]
         DOCKERFILE_NAME = "${params.DOCKERFILE_NAME}"
         TEMPLATE_NAME = "${params.TEMPLATE_NAME}"
         DOCKER_REGISTRY = "${params.DOCKER_REGISTRY}"
@@ -105,6 +106,11 @@ pipeline {
                     sh """
                     oc get pods | grep Running | grep '1/1'
                     """
+            }
+        }
+        stage("test") {
+            steps {
+                echo "env.TEST_ENV[1]"
             }
         }
         stage("Run next stage") {
