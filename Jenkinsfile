@@ -111,7 +111,7 @@ pipeline {
         }
         stage("test") {
             steps {
-                echo "env.TEST_ENV[1]"
+                echo "${env.TEST_ENV[1]}"
             }
         }
         stage("Run next stage") {
