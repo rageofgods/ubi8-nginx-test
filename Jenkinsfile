@@ -99,6 +99,11 @@ pipeline {
                     """
             }
         }
+        stage("test") {
+            steps {
+                echo "${TEST_ENV[1]}"
+            }
+        }
         stage("ocp get status") {
             steps {
                 echo "=====Waiting 15 second to build process catch-up====="
@@ -107,11 +112,6 @@ pipeline {
                     sh """
                     oc get pods | grep Running | grep '1/1'
                     """
-            }
-        }
-        stage("test") {
-            steps {
-                echo "${env.TEST_ENV[1]}"
             }
         }
         stage("Run next stage") {
