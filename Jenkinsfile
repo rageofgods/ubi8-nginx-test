@@ -116,10 +116,11 @@ pipeline {
                     """
             }
         }
-        stage("Run next stage ${building_dev[current_build_index + 1]}") {
+        stage("Run next stage") {
             steps {
                 script {
                     //run next environment job if we don't finish
+                    println "Running ${building_dev[current_build_index + 1]}"
                     if (current_build_index < build_index_size - 1) {
                         build job: "dso.ext_test(${building_dev[current_build_index + 1]})"
                     }
