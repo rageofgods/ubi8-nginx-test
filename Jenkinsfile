@@ -3,7 +3,7 @@
 def building_dev = ["dev", "uat"]
 def current_build_prefix = "${env.JOB_NAME}".substring("${env.JOB_NAME}".indexOf("(") + 1, "${env.JOB_NAME}".length() - 1)
 def current_build_index = building_dev.findIndexOf{it == current_build_prefix}
-def current_build_index_size = building_dev.size()
+def build_index_size = building_dev.size()
 
 pipeline {
     agent {
@@ -121,8 +121,9 @@ pipeline {
         stage("Run next stage") {
             steps {
                 script {
-                    if (current_build_index < current_build_index_size - 1) {
-                        println (building_dev[current_build_index + 1])
+                    if (current_build_index < build_index_size - 1) {
+                        build job: "dso.ext_test(${building_dev[current_build_index + 1]})"
+                        //println (building_dev[current_build_index + 1])
                     }
                     else {
                         println ("End of list")
