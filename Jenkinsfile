@@ -1,13 +1,17 @@
 #!groovy
 
-def building_dev = ["dev", "uat"]
+def building_dev = ["dev", "uat"] //define running environments
+
+//get current build prefix from the job name
 def current_build_prefix = "${env.JOB_NAME}".substring("${env.JOB_NAME}".indexOf("(") + 1, "${env.JOB_NAME}".length() - 1)
+
+//define environment list size
 def current_build_index = building_dev.findIndexOf{it == current_build_prefix}
 def build_index_size = building_dev.size()
 
 pipeline {
     agent {
-        label "${params.DEPLOY_ENV}"
+        label "${params.AGENT_TAG}"
     }
     environment {
         DOCKERFILE_NAME = "${params.DOCKERFILE_NAME}"
@@ -102,12 +106,6 @@ pipeline {
                     """
             }
         }
-        stage("test") {
-            steps {
-                echo "${building_dev[1]}"
-                echo "${current_build_prefix}"
-            }
-        }
         stage("ocp get status") {
             steps {
                 echo "=====Waiting 15 second to build process catch-up====="
@@ -118,15 +116,12 @@ pipeline {
                     """
             }
         }
-        stage("Run next stage") {
+        stage("Run next stage ${building_dev[current_build_index + 1]}") {
             steps {
                 script {
+                    //run next environment job if we don't finish
                     if (current_build_index < build_index_size - 1) {
                         build job: "dso.ext_test(${building_dev[current_build_index + 1]})"
-                        //println (building_dev[current_build_index + 1])
-                    }
-                    else {
-                        println ("End of list")
                     }
                 }
             }
