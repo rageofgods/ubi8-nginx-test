@@ -122,7 +122,7 @@ pipeline {
             steps {
                 script {
                     if (current_build_index < current_build_index_size - 1) {
-                        println (myList[current_build_index + 1])
+                        println (building_dev[current_build_index + 1])
                     }
                     else {
                         println ("End of list")
