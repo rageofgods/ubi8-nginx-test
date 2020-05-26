@@ -1,7 +1,9 @@
 #!groovy
 
-def BUILDING_ENV = ["dev", "uat"]
-def current_build_prefix = "${env.JOB_NAME}".substring("${env.JOB_NAME}".indexOf("[") + 1, "${env.JOB_NAME}".length() - 1)
+def building_dev = ["dev", "uat"]
+def current_build_prefix = "${env.JOB_NAME}".substring("${env.JOB_NAME}".indexOf("(") + 1, "${env.JOB_NAME}".length() - 1)
+def current_build_index = building_dev.findIndexOf{it == current_build_prefix}
+def current_build_index_size = myList.size()
 
 pipeline {
     agent {
@@ -102,7 +104,7 @@ pipeline {
         }
         stage("test") {
             steps {
-                echo "${BUILDING_ENV[1]}"
+                echo "${building_dev[1]}"
                 echo "${current_build_prefix}"
             }
         }
@@ -117,11 +119,15 @@ pipeline {
             }
         }
         stage("Run next stage") {
-            when { expression { params.DEPLOY_ENV == 'dev' } }
-            steps {
-                echo "Start running UAT"
-                    build job: 'DSO.EXT_TEST_UAT'
+            script {
+                if (current_build_index < current_build_index_size - 1) {
+                    println (myList[current_build_index + 1])
+                }
+                else {
+                    println ("End of list")
+                }
             }
+            
         }
     }
 }
