@@ -1,11 +1,12 @@
 #!groovy
 
+def TEST_ENV = ["dev", "Banana", "Orange"]
+
 pipeline {
     agent {
         label "${params.DEPLOY_ENV}"
     }
     environment {
-        TEST_ENV = ["dev", "Banana", "Orange"]
         DOCKERFILE_NAME = "${params.DOCKERFILE_NAME}"
         TEMPLATE_NAME = "${params.TEMPLATE_NAME}"
         DOCKER_REGISTRY = "${params.DOCKER_REGISTRY}"
