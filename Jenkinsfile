@@ -1,6 +1,7 @@
 #!groovy
 
-def TEST_ENV = ["dev", "Banana", "Orange"]
+def BUILDING_ENV = ["dev", "uat"]
+def current_build_prefix = "${env.JOB_NAME}".substring("${env.JOB_NAME}".indexOf("[") + 1, "${env.JOB_NAME}".length() - 1)
 
 pipeline {
     agent {
@@ -101,7 +102,8 @@ pipeline {
         }
         stage("test") {
             steps {
-                echo "${TEST_ENV[1]}"
+                echo "${BUILDING_ENV[1]}"
+                echo "${current_build_prefix}"
             }
         }
         stage("ocp get status") {
